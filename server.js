@@ -7,7 +7,11 @@ const app = express();
 
 // Middleware
 app.use(express.json()); // Parses incoming JSON requests
-app.use(cors()); // Enables CORS
+app.use(cors({
+  origin: 'https://unique-dragon-3b7014.netlify.app/', // Frontend domain
+  methods: ['GET', 'POST'],
+  credentials: true
+})); // Enables CORS
 
 // MongoDB Connection
 const mongoURI = 'mongodb://localhost:27017/form-builder'; // Replace with your actual MongoDB URI
