@@ -14,7 +14,7 @@ app.use(cors({
 })); // Enables CORS
 
 // MongoDB Connection
-const mongoURI = 'mongodb+srv://baikandhanusha24:<db_password>@cluster0.lauom.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'; // Replace with your actual MongoDB URI
+const mongoURI = 'mongodb+srv://baikandhanusha24:<7815834749>@cluster0.lauom.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'; // Replace with your actual MongoDB URI
 mongoose
   .connect(mongoURI)
   .then(() => console.log('Connected to MongoDB'))
