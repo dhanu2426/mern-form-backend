@@ -8,13 +8,13 @@ const app = express();
 // Middleware
 app.use(express.json()); // Parses incoming JSON requests
 app.use(cors({
-  origin: 'https://unique-dragon-3b7014.netlify.app/', // Frontend domain
+  origin: 'https://unique-dragon-3b7014.netlify.app', // Frontend domain
   methods: ['GET', 'POST'],
   credentials: true
 })); // Enables CORS
 
 // MongoDB Connection
-const mongoURI = 'mongodb+srv://baikandhanusha24:7815834749@cluster0.lauom.mongodb.net/sample_mflix?retryWrites=true&w=majority&appName=Cluster0'; // Replace with your actual MongoDB URI
+const mongoURI = 'mongodb+srv://baikandhanusha24:7815834749@cluster0.lauom.mongodb.net/sample_mflix?retryWrites=true&w=majority&appName=Cluster0';
 mongoose
   .connect(mongoURI)
   .then(() => console.log('Connected to MongoDB'))
@@ -23,6 +23,7 @@ mongoose
 // MongoDB Schema and Model
 const formSchema = new mongoose.Schema({
   title: String,
+  headerImage: String,  // New field for header image URL
   questions: [String],
   responses: [
     {
@@ -49,7 +50,7 @@ app.get('/forms', async (req, res) => {
 // POST: Create a New Form
 app.post('/forms', async (req, res) => {
   try {
-    const { title, questions } = req.body;
+    const { title, headerImage, questions } = req.body;
 
     if (!title || !questions || questions.length === 0) {
       return res.status(400).json({ message: "Title and questions are required" });
@@ -57,6 +58,7 @@ app.post('/forms', async (req, res) => {
 
     const newForm = new Form({
       title,
+      headerImage,  // Save header image URL
       questions,
       responses: [],
     });
@@ -83,7 +85,7 @@ app.get('/forms/:id', async (req, res) => {
 // POST: Submit Responses for a Form
 app.post('/forms/:id/responses', async (req, res) => {
   try {
-    const { userId, answers } = req.body;  // Extract answers and userId from the request body
+    const { userId, answers } = req.body;
     const form = await Form.findById(req.params.id);
 
     if (!form) {
